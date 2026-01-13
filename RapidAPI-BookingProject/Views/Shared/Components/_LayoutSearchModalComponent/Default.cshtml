@@ -1,0 +1,23 @@
+﻿
+@*
+   _LayoutSearchModalComponent
+*@
+
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch"><i class="icon_close"></i></div>
+
+@* 
+        @using (Html.BeginForm("Index", "SearchLocation", FormMethod.Post))
+        {
+            <label>Şehir Adınız Giriniz</label>
+            <input type="text" class="form-control" name="cityName" />
+            <button class="btn btn-primary">Şehir ID için bul </button>
+        } *@
+
+        <form asp-controller="Location" asp-action="Index" class="search-model-form">
+            <input type="text" id="search-input" name="cityName" placeholder="Lokasyon bilgisi giriniz ?">
+            <button type="submit" class="btn btn-info">Ara</button>
+        </form>
+    </div>
+</div>

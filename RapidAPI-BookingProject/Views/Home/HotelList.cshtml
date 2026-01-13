@@ -1,0 +1,109 @@
+﻿@model List<ResultHotelListDto>
+
+<div class="hotel-list">
+    @foreach (var hotel in Model)
+    {
+        <div class="hotel-card"
+             style="background-image:url('@hotel.photoMainUrl')">
+
+            <div class="hotel-overlay"></div>
+
+            <div class="hotel-content">
+                <span class="hotel-rating">
+                    ⭐ @hotel.reviewScore
+                </span>
+
+                <h4 class="hotel-title">
+                    <a asp-controller="Home"
+                       asp-action="HotelDetail"
+                       asp-route-hotelId="@hotel.id">
+                        @hotel.name
+                    </a>
+                </h4>
+
+                <div class="hotel-currency">
+                    @hotel.currency
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .hotel-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        /* 🔥 SAYFA KENARLARINDAN AYIR */
+        padding: 32px 40px;
+    }
+
+    /* kart */
+    .hotel-card {
+        position: relative;
+        height: 340px;
+        border-radius: 20px;
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+        .hotel-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.25);
+        }
+
+    /* foto kararması */
+    .hotel-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( to top, rgba(0,0,0,.8), rgba(0,0,0,.25), rgba(0,0,0,0) );
+    }
+
+    /* içerik */
+    .hotel-content {
+        position: absolute;
+        bottom: 28px;
+        left: 28px;
+        right: 28px;
+        color: #fff;
+        z-index: 2;
+    }
+
+    /* rating */
+    .hotel-rating {
+        background: #ffb703;
+        color: #000;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 6px 12px;
+        border-radius: 14px;
+        display: inline-block;
+        margin-bottom: 12px;
+    }
+
+    /* başlık */
+    .hotel-title {
+        margin: 6px 0 10px;
+        font-size: 19px;
+        line-height: 1.45;
+    }
+
+        .hotel-title a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+            .hotel-title a:hover {
+                text-decoration: underline;
+            }
+
+    /* currency */
+    .hotel-currency {
+        font-size: 14px;
+        opacity: .9;
+    }
+
+</style>
