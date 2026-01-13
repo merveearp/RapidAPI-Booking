@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
+using RapidAPI_BookingProject.Models;
 using RapidAPI_BookingProject.Services.BookingServices;
 
 public class HomeController : Controller
@@ -15,9 +17,9 @@ public class HomeController : Controller
         return View();
     }
 
-   
-    public async Task<IActionResult> SearchHotel( string cityName,string checkIn,string checkOut,int adults)
-    {   
+
+    public async Task<IActionResult> SearchHotel( string cityName, string checkIn, string checkOut,int adults)
+    {    
         var locations = await _bookingService.GetLocationAsync(cityName);
         var destId = locations.FirstOrDefault()?.dest_id;
 
@@ -26,15 +28,35 @@ public class HomeController : Controller
             return RedirectToAction("Index");
         }
 
-        
-        var hotels = await _bookingService.GetByHotelListAsync( destId, checkIn,checkOut, adults );
+        var hotels = await _bookingService.GetByHotelListAsync( destId, checkIn, checkOut, adults);
+
+       
+        ViewBag.CheckIn = checkIn;
+        ViewBag.CheckOut = checkOut;
 
         return View("HotelList", hotels);
     }
 
-    public async Task<IActionResult> HotelDetail(string hotelId)
+
+    public async Task<IActionResult> HotelDetail(string hotelId, string checkIn, string checkOut)
     {
-        var value = await _bookingService.GetHotelDetailAsync(hotelId);
-        return View(value);
+        var detail = await _bookingService.GetHotelDetailAsync(hotelId, checkIn,checkOut);
+
+        
+        var photos = await _bookingService.GetByHotelPhotosAsync(hotelId);
+
+        
+        var model = new HotelDetailViewModel
+        {
+            Detail = detail,
+            Photos = photos,
+            CheckIn = checkIn,
+            CheckOut = checkOut
+        };
+
+        
+        return View(model);
     }
+
+
 }

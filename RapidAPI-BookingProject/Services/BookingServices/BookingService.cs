@@ -41,12 +41,8 @@ namespace RapidAPI_BookingProject.Services.BookingServices
                 ?? new List<SearchLocationDto>();
         }
 
-        // 🔹 OTEL LİSTESİ
-        public async Task<List<ResultHotelListDto>> GetByHotelListAsync(
-            string destId,
-            string checkIn,
-            string checkOut,
-            int adults)
+       
+        public async Task<List<ResultHotelListDto>> GetByHotelListAsync( string destId, string checkIn, string checkOut, int adults)
         {
             var finalDestId = string.IsNullOrWhiteSpace(destId)
                 ? "-755070"
@@ -92,20 +88,28 @@ namespace RapidAPI_BookingProject.Services.BookingServices
             return result?.results ?? new List<ResultHotelListDto>();
         }
 
-       
-        public async Task<ResultHotelDetailDto> GetHotelDetailAsync(string hotelId)
+
+        public async Task<ResultHotelDetailDto> GetHotelDetailAsync( string hotelId, string checkIn, string checkOut)
         {
+            var finalCheckIn = string.IsNullOrWhiteSpace(checkIn)
+                ? DateTime.Today.ToString("yyyy-MM-dd")
+                : checkIn;
+
+            var finalCheckOut = string.IsNullOrWhiteSpace(checkOut)
+                ? DateTime.Parse(finalCheckIn).AddDays(3).ToString("yyyy-MM-dd")
+                : checkOut;
+
+            var url =
+                $"https://booking-com.p.rapidapi.com/v2/hotels/details" +
+                $"?hotel_id={hotelId}" +
+                $"&checkin_date={finalCheckIn}" +
+                $"&checkout_date={finalCheckOut}" +
+                $"&locale=en-gb" +
+                $"&currency=EUR";
+
             using var client = new HttpClient();
 
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(
-                    $"https://booking-com.p.rapidapi.com/v1/hotels/data" +
-                    $"?hotel_id={hotelId}&locale=en-gb"
-                ),
-            };
-
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("x-rapidapi-key", rapidapi_key);
             request.Headers.Add("x-rapidapi-host", rapidapi_host);
 
@@ -114,17 +118,38 @@ namespace RapidAPI_BookingProject.Services.BookingServices
 
             var body = await response.Content.ReadAsStringAsync();
 
-            var value = JsonConvert.DeserializeObject<ResultHotelDetailDto>(body);
+            var result = JsonConvert.DeserializeObject<ResultHotelDetailDto>(body);
 
-            return value;
+            return result;
         }
+
+        public async Task<List<ResultByHotelPhotosDto>> GetByHotelPhotosAsync(string hotelId)
+        {
+            var url =
+                $"https://booking-com.p.rapidapi.com/v1/hotels/photos" +
+                $"?hotel_id={hotelId}" +
+                $"&locale=en-gb";
+
+            using var client = new HttpClient();
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("x-rapidapi-key", rapidapi_key);
+            request.Headers.Add("x-rapidapi-host", rapidapi_host);
+
+            using var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            var photos = JsonConvert.DeserializeObject<List<ResultByHotelPhotosDto>>(body);
+
+            return photos?
+                .Take(10)
+                .ToList()
+                ?? new List<ResultByHotelPhotosDto>();
+        }
+
+        
     }
 
 }
-
-
-
-
-
-
-
