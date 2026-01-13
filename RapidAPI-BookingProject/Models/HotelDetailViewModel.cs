@@ -1,4 +1,4 @@
-﻿using RapidAPI_BookingProject.Dtos;
+﻿using RapidAPI_BookingProject.Dtos.BookingDtos;
 
 namespace RapidAPI_BookingProject.Models
 {
@@ -7,7 +7,10 @@ namespace RapidAPI_BookingProject.Models
         {
 
             public ResultHotelDetailDto Detail { get; set; }
+            public ResultHotelDescriptionDto Description { get; set; }
+            public ResultByHotelScoreDto Score { get; set; }
             public List<ResultByHotelPhotosDto> Photos { get; set; }
+            
 
 
             public string CheckIn { get; set; }

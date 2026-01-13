@@ -1,4 +1,27 @@
-﻿@model List<ResultHotelListDto>
+﻿@using RapidAPI_BookingProject.Dtos.BookingDtos
+@model List<ResultHotelListDto>
+
+<a href="javascript:history.back()" class="back-button">
+    ← Geri Dön
+</a>
+
+
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>İşte Aradığınız Oteli Kolayca Bulun </h2>
+                    <div class="bt-option">
+                        <span>Otel Listesi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
 
 <div class="hotel-list">
     @foreach (var hotel in Model)

@@ -44,12 +44,16 @@ public class HomeController : Controller
 
         
         var photos = await _bookingService.GetByHotelPhotosAsync(hotelId);
+        var description = await _bookingService.GetHotelDescriptionAsync(hotelId);
+        var score = await _bookingService.GetByHotelScoreAsync(hotelId);
 
         
         var model = new HotelDetailViewModel
         {
             Detail = detail,
             Photos = photos,
+            Description=description,
+            Score=score,
             CheckIn = checkIn,
             CheckOut = checkOut
         };

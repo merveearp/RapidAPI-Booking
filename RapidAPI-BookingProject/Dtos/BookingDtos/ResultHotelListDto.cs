@@ -1,4 +1,4 @@
-﻿namespace RapidAPI_BookingProject.Dtos
+﻿namespace RapidAPI_BookingProject.Dtos.BookingDtos
 {
     public class ResultHotelListDto
     {      

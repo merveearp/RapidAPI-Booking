@@ -1,44 +1,58 @@
-﻿
-
-@model HotelDetailViewModel
+﻿@model HotelDetailViewModel
 @{
     ViewData["Title"] = Model.Detail.hotel_name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- ===================== -->
-<!-- FOTO SLIDER (ÜST) -->
-<!-- ===================== -->
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
 
-<div class="hotel-detail-slider swiper">
-    <div class="swiper-wrapper">
-        @foreach (var photo in Model.Photos)
-        {
-            <div class="swiper-slide">
-                <img src="@photo.url_1440"
-                     alt="Hotel Photo"
-                     class="hotel-slide-img" />
-            </div>
-        }
+
+
+<div class="hotel-slider-wrapper">
+
+
+    <a href="javascript:history.back()" class="back-button">
+        ← Geri Dön
+    </a>
+
+    <div class="hotel-detail-slider swiper">
+        <div class="swiper-wrapper">
+            @foreach (var photo in Model.Photos)
+            {
+                <div class="swiper-slide">
+                    <img src="@photo.url_1440"
+                         alt="Hotel Photo"
+                         class="hotel-slide-img" />
+                </div>
+            }
+        </div>
+
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
-
-    <!-- oklar -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
 </div>
 
-<!-- ===================== -->
-<!-- OTEL DETAY BİLGİLERİ -->
-<!-- ===================== -->
 
 <div class="hotel-detail-container">
 
     <h1 class="hotel-name">
         @Model.Detail.hotel_name
     </h1>
+
+    @if (!string.IsNullOrEmpty(Model.Detail.url))
+    {
+        <a href="@Model.Detail.url"
+           target="_blank"
+           class="hotel-link">
+            Oteli Booking’de Gör
+        </a>
+    }
 
     <p class="hotel-address">
         @Model.Detail.address
@@ -48,29 +62,72 @@
         <strong>@Model.CheckIn</strong> → <strong>@Model.CheckOut</strong>
     </div>
 
-    <!-- FACILITIES -->
+    @if (Model.Score?.score_percentage != null && Model.Score.score_percentage.Any())
+    {
+        <div class="hotel-score-box">
+            <span class="score-value">
+                @Model.Score.score_breakdown?.FirstOrDefault()?.average_score
+            </span>
+            <span class="score-text">
+                @Model.Score.score_percentage.FirstOrDefault()?.score_word
+            </span>
+        </div>
+    }
+
+
+    @if (!string.IsNullOrEmpty(Model.Description?.description))
+    {
+        <div class="hotel-description">
+            @Html.Raw(Model.Description.description)
+        </div>
+    }
+
     @if (Model.Detail.facilities_block?.facilities != null)
     {
-        <h3>Otel Olanakları</h3>
+        <h3 class="section-title">Otel Olanakları</h3>
         <ul class="hotel-facilities">
             @foreach (var item in Model.Detail.facilities_block.facilities)
             {
-                <li>@item.name</li>
+                <li>
+                    <i class="fa-solid fa-@item.icon"></i>
+                    <span>@item.name</span>
+                </li>
+            }
+        </ul>
+    } 
+
+    @if (Model.Score?.score_breakdown != null)
+    {
+        <h3 class="section-title">Misafir Puanları</h3>
+
+        <ul class="hotel-score-list">
+            @foreach (var block in Model.Score.score_breakdown)
+            {
+                @foreach (var q in block.question)
+                {
+                    <li>
+                        <span>@q.localized_question</span>
+                        <strong>@q.score</strong>
+                    </li>
+                }
             }
         </ul>
     }
 
+
 </div>
 
-<!-- ===================== -->
-<!-- SCRIPTS -->
-<!-- ===================== -->
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
     new Swiper('.hotel-detail-slider', {
         loop: true,
+        slidesPerView: 1.2,
+        centeredSlides: true,
+        spaceBetween: 24,
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
@@ -78,18 +135,85 @@
     });
 </script>
 
-<!-- ===================== -->
-<!-- STYLES -->
-<!-- ===================== -->
 
 <style>
-    .hotel-detail-slider {
-        width: 100%;
-        height: 480px;
-        border-radius: 24px;
-        overflow: hidden;
-        margin-bottom: 40px;
+    /* ===== SCORE BOX ===== */
+    .hotel-score-box {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #e9f5f1;
+        border-radius: 14px;
+        padding: 14px 18px;
+        width: fit-content;
+        margin-bottom: 24px;
     }
+
+    .score-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2a9d8f;
+    }
+
+    .score-text {
+        font-size: 15px;
+        font-weight: 600;
+        color: #264653;
+    }
+
+    /* ===== SCORE LIST ===== */
+    .hotel-score-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 12px;
+        max-width: 600px;
+    }
+
+        .hotel-score-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .hotel-score-list strong {
+            color: #2a9d8f;
+        }
+
+    /* ===== SLIDER WRAPPER ===== */
+    .hotel-slider-wrapper {
+        max-width: 1300px;
+        margin: 30px auto 60px;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    /* ===== GERİ DÖN ===== */
+    .back-button {
+        display: inline-block;
+        margin-bottom: 16px;
+        font-weight: 600;
+        color: #333;
+        text-decoration: none;
+    }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+
+    /* ===== SLIDER ===== */
+    .hotel-detail-slider {
+        height: 520px;
+        border-radius: 28px;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .hotel-detail-slider .swiper-slide {
+            border-radius: 28px;
+            overflow: hidden;
+        }
 
     .hotel-slide-img {
         width: 100%;
@@ -97,6 +221,32 @@
         object-fit: cover;
     }
 
+    /* gradient */
+    .hotel-detail-slider::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( to top, rgba(0,0,0,.35), rgba(0,0,0,.05), transparent );
+        pointer-events: none;
+    }
+
+    /* oklar */
+    .hotel-detail-slider .swiper-button-next,
+    .hotel-detail-slider .swiper-button-prev {
+        color: #fff;
+        background: rgba(0,0,0,.45);
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+    }
+
+        .hotel-detail-slider .swiper-button-next::after,
+        .hotel-detail-slider .swiper-button-prev::after {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    /* ===== DETAY ALANI ===== */
     .hotel-detail-container {
         max-width: 1100px;
         margin: auto;
@@ -106,8 +256,20 @@
     .hotel-name {
         font-size: 32px;
         font-weight: 700;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
     }
+
+    .hotel-link {
+        display: inline-block;
+        margin-bottom: 12px;
+        color: #0066cc;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        .hotel-link:hover {
+            text-decoration: underline;
+        }
 
     .hotel-address {
         color: #666;
@@ -116,29 +278,41 @@
 
     .hotel-dates {
         font-size: 15px;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
+        font-weight: 500;
     }
 
-    .hotel-review {
-        font-size: 16px;
-        font-weight: 600;
+    .hotel-description {
         margin-bottom: 30px;
+        line-height: 1.7;
+    }
+
+    .section-title {
+        margin-bottom: 16px;
+        font-size: 22px;
+        font-weight: 600;
     }
 
     .hotel-facilities {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 12px;
         padding-left: 0;
         list-style: none;
     }
 
         .hotel-facilities li {
             background: #f8f9fa;
-            padding: 10px 14px;
-            border-radius: 10px;
+            padding: 12px 16px;
+            border-radius: 12px;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hotel-facilities i {
+            color: #2a9d8f;
+            font-size: 16px;
         }
 </style>
-
-

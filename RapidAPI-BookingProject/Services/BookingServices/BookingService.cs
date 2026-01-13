@@ -2,7 +2,8 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RapidAPI_BookingProject.Dtos;
+using RapidAPI_BookingProject.Dtos.BookingDtos;
+using static System.Net.WebRequestMethods;
 
 namespace RapidAPI_BookingProject.Services.BookingServices
 {
@@ -69,7 +70,7 @@ namespace RapidAPI_BookingProject.Services.BookingServices
                 $"&adults_number={finalAdults}" +
                 $"&room_number=1" +
                 $"&units=metric" +
-                $"&locale=en-gb" +
+                $"&locale=tr" +
                 $"&page_number=0";
 
             using var client = new HttpClient();
@@ -104,7 +105,7 @@ namespace RapidAPI_BookingProject.Services.BookingServices
                 $"?hotel_id={hotelId}" +
                 $"&checkin_date={finalCheckIn}" +
                 $"&checkout_date={finalCheckOut}" +
-                $"&locale=en-gb" +
+                $"&locale=tr" +
                 $"&currency=EUR";
 
             using var client = new HttpClient();
@@ -149,7 +150,51 @@ namespace RapidAPI_BookingProject.Services.BookingServices
                 ?? new List<ResultByHotelPhotosDto>();
         }
 
-        
+        public async Task<ResultHotelDescriptionDto> GetHotelDescriptionAsync(string hotelId)
+        {
+
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://booking-com.p.rapidapi.com/v2/hotels/description?hotel_id={hotelId}&locale=tr"),
+                Headers =
+            {
+                { "x-rapidapi-key", rapidapi_key },
+                { "x-rapidapi-host", rapidapi_host },
+            },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var value = JsonConvert.DeserializeObject<ResultHotelDescriptionDto>(body);
+                return value;
+            }
+        }
+
+        public async Task<ResultByHotelScoreDto> GetByHotelScoreAsync(string hotelId)
+        {
+
+            var url = $"https://booking-com.p.rapidapi.com/v1/hotels/review-scores?hotel_id={hotelId}&locale=tr";
+
+            using var client = new HttpClient();
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("x-rapidapi-key", rapidapi_key);
+            request.Headers.Add("x-rapidapi-host", rapidapi_host);
+
+            using var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<ResultByHotelScoreDto>(body);
+
+            return result;
+
+        }
     }
 
 }

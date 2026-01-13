@@ -21,12 +21,7 @@
                             <a href="#"><i class="fa fa-tripadvisor"></i></a>
                             <a href="#"><i class="fa fa-instagram"></i></a>
                         </div>
-                        <a href="#" class="bk-btn">Booking Now</a>
-                        <div class="language-option">
-                            <img src="~/sona-master/img/flag.jpg" alt="">
-                            <span>TR<i class="fa fa-angle-down"></i></span>
-
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -47,27 +42,12 @@
                         <nav class="mainmenu">
                             <ul>
                                 <li class="active"><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                                <li><a asp-controller="Room" asp-action="Index">Odalar</a></li>
                                 <li><a asp-controller="About" asp-action="Index">Hakkımızda</a></li>
-                                <li>
-                                    <a href="./pages.html">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="./room-details.html">Politika</a></li>
-                                        <li><a href="./blog-details.html">Blog</a></li>
-                                       
-                                    </ul>
-                                </li>
-                                <li><a href="./blog.html">News</a></li>
-                                <li><a href="./contact.html">İletişim</a></li>
+                                <li><a asp-controller="Room" asp-action="Index">Odalar</a></li>
+                                <li><a asp-controller="Blog" asp-action="Index">Blog</a></li>
+                                <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
                             </ul>
                         </nav>
-
-                        <a asp-controller="Location"
-                           asp-action="Index"
-                           class="nav-right search-switch">
-
-                            <i class="icon_search"></i>
-                        </a>
 
                     </div>
                 </div>
