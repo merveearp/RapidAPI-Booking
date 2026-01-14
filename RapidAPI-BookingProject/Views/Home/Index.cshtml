@@ -2,49 +2,57 @@
 @{
     ViewData["Title"] = "Home Page";
 
-    var icon = Model.weather[0].icon; // örn: 04n
+    var icon = Model.weather[0].icon; 
     bool isNight = icon.EndsWith("n");
+    var iconUrl = $"https://openweathermap.org/img/wn/{icon}@2x.png";
 }
+
 
 @if (Model?.weather != null && Model.weather.Length > 0)
 {
-    <div class="weather-widget @(isNight ? "night" : "day") mb-3">
-        <div class="weather-left">
-            <img src="@($"https://openweathermap.org/img/wn/{icon}@2x.png")"
-                 alt="@Model.weather[0].description" />
+    <div class="weather-card @(isNight ? "night" : "day")">
+
+        <div class="weather-header">
+            <div class="weather-icon">
+               <img src="https://openweathermap.org/img/wn/@(Model.weather[0].icon + "@2x.png")"
+     alt="@Model.weather[0].description" />
+
+            </div>
+
+            <div class="weather-main">
+                <h4>@Model.name, @Model.sys.country</h4>
+                <div class="weather-temp">@Math.Round(Model.main.temp)°C</div>
+                <span class="weather-desc">@Model.weather[0].description</span>
+            </div>
         </div>
 
-        <div class="weather-right">
-            <span class="city">
-                @Model.name, @Model.sys.country
-            </span>
-           
-            <span class="temp">
-                @Math.Round(Model.main.temp)°C
-            </span>
+        <div class="weather-details">
             <div class="detail-item">
-                <div class="detail-label">Nem</div>
-                <div class="detail-value">@Model.main.humidity%</div>
-
-
-            </div>
-            <div class="detail-item">
-                <div class="detail-label">Rüzgar</div>
-                <div class="detail-value">@Math.Round(Model.wind.speed) km/s</div>
-            </div>
-            <div class="detail-item">
-                <div class="detail-label">Hissedilen</div>
-                <div class="detail-value">@Math.Round(Model.main.feels_like)%</div>
-            </div>
-            <div class="detail-item">
-                <div class="detail-label">Basınç</div>
-                <div class="detail-value">@Model.main.pressure hPa</div>
+                <i class="fa-solid fa-temperature-half"></i>
+                <span>Hissedilen</span>
+                <strong>@Math.Round(Model.main.feels_like)°C</strong>
             </div>
 
-            <span class="desc">
-                @Model.weather[0].description
-            </span>
+            <div class="detail-item">
+                <i class="fa-solid fa-droplet"></i>
+                <span>Nem</span>
+                <strong>@Model.main.humidity%</strong>
+            </div>
+
+            <div class="detail-item">
+                <i class="fa-solid fa-wind"></i>
+                <span>Rüzgar</span>
+                <strong>@Math.Round(Model.wind.speed * 3.6) km/sa</strong>
+
+            </div>
+
+            <div class="detail-item">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>Basınç</span>
+                <strong>@Model.main.pressure hPa</strong>
+            </div>
         </div>
+
     </div>
 }
 
@@ -71,8 +79,9 @@
                     <h3>Aradığınız oteli hemen bulun </h3>
 
                     <form asp-controller="Home"
-                          asp-action="SearchHotel"
+                          asp-action="Index"
                           method="get">
+
 
 
                         <div class="check-date">
@@ -125,6 +134,11 @@
 </section>
 <!-- Hero Section End -->
 
+
+@await Component.InvokeAsync("_UIHotelListComponent")
+
+
+
 <!-- About Us Section Begin -->
 
 @await Component.InvokeAsync("_UIAboutUsComponent")
@@ -148,57 +162,75 @@
 <!-- Blog Section End -->
 
 <style>
-    .weather-widget {
+    .weather-card {
+        max-width: 420px;
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        background: #ffffff;
+        margin-bottom: 30px;
+    }
+
+        .weather-card.day {
+            background: linear-gradient(135deg, #e3f2fd, #ffffff);
+        }
+
+        .weather-card.night {
+            background: linear-gradient(135deg, #1e293b, #020617);
+            color: #fff;
+        }
+
+    .weather-header {
         display: flex;
         align-items: center;
-        gap: 14px;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 14px;
-        padding: 14px 18px;
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+        gap: 15px;
+        margin-bottom: 20px;
     }
 
-    .weather-left img {
-        width: 56px;
-        height: 56px;
+    .weather-icon img {
+        width: 80px;
     }
 
-    .weather-right {
+    .weather-main h4 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .weather-temp {
+        font-size: 36px;
+        font-weight: 700;
+    }
+
+    .weather-desc {
+        font-size: 14px;
+        opacity: 0.8;
+        text-transform: capitalize;
+    }
+
+    .weather-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .detail-item {
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255,255,255,0.6);
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 14px;
     }
 
-        .weather-right .city {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .weather-right .temp {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .weather-right .desc {
-            font-size: 13px;
-            color: #666;
-            text-transform: capitalize;
-        }
-    .weather-widget.day {
-        background: rgba(255, 255, 255, 0.95);
-        color: #222;
+    .weather-card.night .detail-item {
+        background: rgba(255,255,255,0.1);
     }
 
-    .weather-widget.night {
-        background: linear-gradient(135deg, #1e293b, #0f172a);
-        color: #fff;
+    .detail-item i {
+        font-size: 18px;
+        color: #ff9800;
     }
 
-        .weather-widget.night .desc {
-            color: #cbd5f5;
-        }
-
-        .weather-widget.night .city {
-            color: #e0e7ff;
-        }
 
 </style>

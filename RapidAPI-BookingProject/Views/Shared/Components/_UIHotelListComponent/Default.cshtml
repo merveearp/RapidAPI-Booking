@@ -1,9 +1,5 @@
 ﻿@model List<ResultHotelListDto>
 
-<a href="javascript:history.back()" class="back-button">
-    ← Geri Dön
-</a>
-
 
 <!-- Breadcrumb Section Begin -->
 <div class="breadcrumb-section">
@@ -32,13 +28,13 @@
 
             <div class="hotel-content">
 
-               
+
                 <span class="hotel-rating">
                     ⭐ @hotel.reviewScore
                     <small>(@hotel.reviewCount)</small>
                 </span>
 
-              
+
                 <h4 class="hotel-title">
                     <a asp-controller="Home"
                        asp-action="HotelDetail"
@@ -49,7 +45,7 @@
                     </a>
                 </h4>
 
-               
+
                 @if (!string.IsNullOrEmpty(hotel.propertyType))
                 {
                     <div class="hotel-type">
@@ -57,7 +53,7 @@
                     </div>
                 }
 
-              
+
                 @if (!string.IsNullOrEmpty(hotel.countryCode))
                 {
                     <div class="hotel-country">
@@ -65,17 +61,17 @@
                     </div>
                 }
 
-               
+
                 <div class="hotel-dates">
                     @hotel.checkinDate → @hotel.checkoutDate
                 </div>
 
-               
+
                 <div class="hotel-currency">
                     @hotel.currency
                 </div>
 
-               
+
                 @if (!string.IsNullOrEmpty(hotel.wishlistName))
                 {
                     <div class="hotel-wishlist">
@@ -93,11 +89,10 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 24px;
-       
         padding: 32px 40px;
     }
 
-   
+
     .hotel-card {
         position: relative;
         height: 340px;

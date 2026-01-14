@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
+using RapidAPI_BookingProject.Dtos.BookingDtos;
 using RapidAPI_BookingProject.Models;
 using RapidAPI_BookingProject.Services.BookingServices;
 using RapidAPI_BookingProject.Services.ExternalServices;
@@ -17,29 +18,10 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var weather = await _externalService.GetWeatherAsync(null);
+        string cityName = "istanbul";
+     
+        var weather = await _externalService.GetWeatherAsync(cityName);
         return View(weather);
-    }
-
-
-
-    public async Task<IActionResult> SearchHotel( string cityName, string checkIn, string checkOut,int adults)
-    {    
-        var locations = await _bookingService.GetLocationAsync(cityName);
-        var destId = locations.FirstOrDefault()?.dest_id;
-
-        if (string.IsNullOrEmpty(destId))
-        {
-            return RedirectToAction("Index");
-        }
-
-        var hotels = await _bookingService.GetByHotelListAsync( destId, checkIn, checkOut, adults);
-
-       
-        ViewBag.CheckIn = checkIn;
-        ViewBag.CheckOut = checkOut;
-
-        return View("HotelList", hotels);
     }
 
 
@@ -67,3 +49,24 @@ public class HomeController : Controller
 
 
 }
+
+
+
+//public async Task<IActionResult> SearchHotel(string cityName, string checkIn, string checkOut, int adults)
+//{
+//    var locations = await _bookingService.GetLocationAsync(cityName);
+//    var destId = locations.FirstOrDefault()?.dest_id;
+
+//    if (string.IsNullOrEmpty(destId))
+//    {
+//        return RedirectToAction("Index");
+//    }
+
+//    var hotels = await _bookingService.GetByHotelListAsync(destId, checkIn, checkOut, adults);
+
+
+//    ViewBag.CheckIn = checkIn;
+//    ViewBag.CheckOut = checkOut;
+
+//    return View("HotelList", hotels);
+//}
