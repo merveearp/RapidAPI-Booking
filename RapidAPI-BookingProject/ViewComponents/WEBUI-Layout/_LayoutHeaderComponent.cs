@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RapidAPI_BookingProject.Services.ExternalServices;
 
 namespace RapidAPI_BookingProject.ViewComponents.WEBUI_Layout
 {
-    public class _LayoutHeaderComponent :ViewComponent
+    public class _LayoutHeaderComponent(IExternalService _externalService) :ViewComponent
     {
-        public IViewComponentResult Invoke()
+        
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(); 
+            var weather = await _externalService.GetWeatherAsync(null); 
+            return View(weather);
         }
     }
 }

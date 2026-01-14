@@ -1,4 +1,5 @@
 ﻿using RapidAPI_BookingProject.Services.BookingServices;
+using RapidAPI_BookingProject.Services.ExternalServices;
 using System.Reflection;
 
 namespace RapidAPI_BookingProject.Extensions
@@ -9,6 +10,7 @@ namespace RapidAPI_BookingProject.Extensions
         {
            
             services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IExternalService, ExternalService>();
         }
     }
 }
