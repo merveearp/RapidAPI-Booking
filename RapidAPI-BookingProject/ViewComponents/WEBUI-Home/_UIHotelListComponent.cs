@@ -12,13 +12,9 @@ namespace RapidAPI_BookingProject.ViewComponents.WEBUI_Home
             _bookingService = bookingService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(
-     string cityName,
-     string checkIn,
-     string checkOut,
-     int adults)
+        public async Task<IViewComponentResult> InvokeAsync( string cityName,string checkIn, string checkOut,int adults)
         {
-            // 👉 FORM + QUERYSTRING’TEN OKU
+            
             cityName = string.IsNullOrWhiteSpace(cityName)
                 ? HttpContext.Request.Query["cityName"].ToString()
                 : cityName;
@@ -36,7 +32,7 @@ namespace RapidAPI_BookingProject.ViewComponents.WEBUI_Home
                 ? a
                 : adults;
 
-            // 👉 HALA BOŞSA DEFAULT
+           
             cityName = string.IsNullOrWhiteSpace(cityName) ? "istanbul" : cityName;
             checkIn = string.IsNullOrWhiteSpace(checkIn)
                 ? DateTime.Today.ToString("yyyy-MM-dd")

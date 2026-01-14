@@ -17,11 +17,8 @@ public class HomeController : Controller
     }
 
     public async Task<IActionResult> Index()
-    {
-        string cityName = "istanbul";
-     
-        var weather = await _externalService.GetWeatherAsync(cityName);
-        return View(weather);
+    {      
+        return View();
     }
 
 
