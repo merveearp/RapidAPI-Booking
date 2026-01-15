@@ -5,5 +5,9 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
     public interface IExternalService
     {
         Task<ResultWeatherDto> GetWeatherAsync(string cityName);
+        Task<ResultExchangeDto> GetExchangeAsync();
+        Task<ResultCryptoDto> GetCryptoAsync();
+        Task<ResultGoldPriceDto> GetGoldPriceAsync();
+
     }
 }

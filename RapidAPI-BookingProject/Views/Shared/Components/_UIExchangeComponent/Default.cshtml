@@ -1,0 +1,109 @@
+﻿@model ResultExchangeDto
+
+@if (Model != null && Model.rates != null)
+{
+    <div class="info-card exchange-card">
+
+        <div class="exchange-header">
+            <i class="fa-solid fa-money-bill-trend-up"></i>
+            <h5>Döviz Kurları</h5>
+        </div>
+
+        <div class="exchange-base">
+            Baz Para: <strong>@Model.base_code</strong>
+        </div>
+
+        <ul class="exchange-list">
+            <li>
+                <span>🇹🇷 TRY</span>
+                <strong>₺ @Model.rates.TRY</strong>
+            </li>
+            <li>
+                <span>🇺🇸 USD</span>
+                <strong>1 $ = @Model.rates.USD.ToString("0.####") ₺</strong>
+            </li>
+            <li>
+                <span>🇪🇺 EUR</span>
+                <strong>1 € = @Model.rates.EUR.ToString("0.####") ₺</strong>
+            </li>
+            <li>
+                <span>🇬🇧 GBP</span>
+                <strong>1 £ = @Model.rates.GBP.ToString("0.####") ₺</strong>
+            </li>
+
+        </ul>
+
+    </div>
+}
+else
+{
+    <div class="info-card exchange-card">
+        <p>Kur bilgisi alınamadı.</p>
+    </div>
+}
+
+
+                <style>
+    .exchange-list li strong {
+        font-weight: 600;
+    }
+
+    .exchange-list li:nth-child(2) strong {
+        color: #16a34a;
+    }
+
+    .exchange-list li:nth-child(3) strong {
+        color: #2563eb;
+    }
+
+    .exchange-list li:nth-child(4) strong {
+        color: #7c3aed;
+    }
+
+
+
+                    .info-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 160px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.exchange-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.exchange-header i {
+    font-size: 20px;
+    color: #22c55e;
+}
+
+.exchange-header h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.exchange-base {
+    font-size: 13px;
+    opacity: .8;
+    margin-bottom: 12px;
+}
+
+.exchange-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.exchange-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 14px;
+}
+
+                </style>

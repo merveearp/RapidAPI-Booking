@@ -5,7 +5,48 @@
 
 }
 
-@await Component.InvokeAsync("_UIWeatherComponent")
+<section class="info-cards mt-4">
+    <div class="container">
+        <div class="row g-3">
+
+            <div class="col-lg-3 col-md-6">
+                @await Component.InvokeAsync("_UIWeatherComponent")
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                @await Component.InvokeAsync("_UIExchangeComponent")
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                @await Component.InvokeAsync("_UICryptoComponent")
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+               @*  @await Component.InvokeAsync("") *@
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="market-section mt-4">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-lg-6 col-md-12">
+                @await Component.InvokeAsync("_UIGoldAPIComponent")
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                @* ikinci büyük kart buraya *@
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
 
 <!-- Hero Section Begin -->
 <section class="hero-section">
@@ -107,3 +148,32 @@
 @await Component.InvokeAsync("_UIBlogComponent")
 <!-- Blog Section End -->
 
+
+
+
+
+<style>
+    .info-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 18px;
+        min-height: 160px;
+        box-shadow: 0 10px 25px rgba(0,0,0,.08);
+        transition: transform .3s ease;
+    }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+        }
+
+    .market-section .info-card {
+        min-height: 260px;
+        padding: 24px;
+        border-radius: 20px;
+    }
+
+        .market-section .info-card h5 {
+            font-size: 18px;
+        }
+
+</style>

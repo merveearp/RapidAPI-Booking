@@ -1,0 +1,110 @@
+﻿
+@model ResultCryptoDto
+@*
+    _UICryptoComponent
+*@
+
+
+
+@if (Model != null && Model.to != null)
+{
+    <div class="info-card crypto-card">
+
+        <div class="crypto-header">
+            <i class="fa-solid fa-coins"></i>
+            <h5>Kripto Fiyatları</h5>
+        </div>
+
+        <ul class="crypto-list">
+            <li>
+                <span class="crypto-name">
+                    <i class="fa-brands fa-bitcoin"></i> BTC -> Bitcoin
+                </span>
+                <strong>@Model.to.BTC</strong>
+            </li>
+
+            <li>
+                <span class="crypto-name">
+                    <i class="fa-brands fa-ethereum"></i> ETH -> Etherium
+                </span>
+                <strong>@Model.to.ETH</strong>
+            </li>
+
+            <li>
+                <span class="crypto-name">
+                    <i class="fa-solid fa-b"></i> BNB -> BinanceCoin
+                </span>
+                <strong>@Model.to.BNB</strong>
+            </li>
+        </ul>
+
+    </div>
+}
+
+
+                <style>
+
+
+                    .crypto-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.crypto-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.crypto-header i {
+    color: #f7931a;
+    font-size: 20px;
+}
+
+.crypto-header h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.crypto-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.crypto-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.crypto-list li:last-child {
+    border-bottom: none;
+}
+
+.crypto-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.crypto-name i.fa-bitcoin {
+    color: #f7931a;
+}
+
+.crypto-name i.fa-ethereum {
+    color: #3c3c3d;
+}
+
+.crypto-name i.fa-b {
+    color: #f0b90b;
+}
+
+                </style>

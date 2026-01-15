@@ -47,23 +47,3 @@ public class HomeController : Controller
 
 }
 
-
-
-//public async Task<IActionResult> SearchHotel(string cityName, string checkIn, string checkOut, int adults)
-//{
-//    var locations = await _bookingService.GetLocationAsync(cityName);
-//    var destId = locations.FirstOrDefault()?.dest_id;
-
-//    if (string.IsNullOrEmpty(destId))
-//    {
-//        return RedirectToAction("Index");
-//    }
-
-//    var hotels = await _bookingService.GetByHotelListAsync(destId, checkIn, checkOut, adults);
-
-
-//    ViewBag.CheckIn = checkIn;
-//    ViewBag.CheckOut = checkOut;
-
-//    return View("HotelList", hotels);
-//}
