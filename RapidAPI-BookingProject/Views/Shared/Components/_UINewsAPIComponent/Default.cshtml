@@ -1,0 +1,114 @@
+﻿@model ResultNewsOfTurkeyDto
+@*
+   _UINewsAPIComponent
+*@
+
+<div class="info-card news-card h-100">
+
+    <div class="news-header mb-3">
+        <h5 class="mb-0">
+            <i class="fa-solid fa-newspaper me-2"></i>
+            Türkiye Gündemi
+        </h5>
+    </div>
+
+    <div id="newsCarousel"
+         class="carousel slide"
+         data-bs-ride="carousel"
+         data-bs-interval="4000"
+         data-bs-pause="false"
+         data-bs-touch="true">
+
+        <div class="carousel-inner">
+
+            @for (int i = 0; i < Model.data.Length; i++)
+            {
+                var news = Model.data[i];
+
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="news-item">
+
+                        @if (!string.IsNullOrEmpty(news.photo_url))
+                        {
+                            <img src="@news.photo_url"
+                                 class="news-image mb-3"
+                                 alt="@news.title" />
+                        }
+
+                        <h6 class="news-title">@news.title</h6>
+
+                        <p class="news-snippet">
+                            @news.snippet
+                        </p>
+
+                        <div class="news-footer d-flex justify-content-between align-items-center">
+                            <span class="news-source">
+                                @news.source_name
+                            </span>
+
+                            <a href="@news.link"
+                               target="_blank"
+                               class="news-link">
+                                Devamı →
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<style>
+
+
+                                .news-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.news-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.news-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.news-snippet {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    max-height: 65px;
+    overflow: hidden;
+}
+
+.news-footer {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.news-source {
+    color: #999;
+}
+
+.news-link {
+    color: #f5a623;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.news-link:hover {
+    text-decoration: underline;
+}
+
+                            </style>

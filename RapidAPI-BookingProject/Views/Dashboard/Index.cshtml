@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>Genel Bakış</h2>
+
+                    <div class="bt-option">
+                        <a asp-controller="Home" asp-action="Index">Anasayfa</a>
+                        <span>Dashboard</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+
+<section class="market-section mt-4">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-lg-6 col-md-12">
+                @await Component.InvokeAsync("_UIGoldAPIComponent")
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+               
+                @await Component.InvokeAsync("_UINewsAPIComponent")
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+

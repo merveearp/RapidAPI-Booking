@@ -1,10 +1,11 @@
-﻿@model ResultWeatherDto
+﻿
+
+@model ResultWeatherDto
 @*
   _UIWeatherComponent
 *@
 
 @{
-
     var icon = Model.weather[0].icon;
     bool isNight = icon.EndsWith("n");
     var iconUrl = $"https://openweathermap.org/img/wn/{icon}@2x.png";
@@ -12,114 +13,170 @@
 
 @if (Model?.weather != null && Model.weather.Length > 0)
 {
+    <div class="weather-card-final">
 
-    <div class="info-card weather-card @(isNight ? "night" : "day")">
+    
 
 
-        <div class="weather-header">
-            <div class="weather-icon">
-                <div class="weather-icon">
-                    <img src="https://openweathermap.org/img/wn/@(Model.weather[0].icon + "@2x.png")"
-                         alt="@Model.weather[0].description" />
-                </div>
+        <div class="weather-icon-area @(isNight ? "night" : "day")">
 
+            <div class="weather-city">
+                <i class="fa-solid fa-location-dot"></i>
+                @Model.name, @Model.sys.country
             </div>
 
-            <div class="weather-main">
-                <h4>@Model.name, @Model.sys.country</h4>
-                <div class="weather-temp">@Math.Round(Model.main.temp)°C</div>
-                <span class="weather-desc">@Model.weather[0].description</span>
+            <img src="@iconUrl" alt="weather icon">
+
+            <div class="weather-main-temp">
+                @Math.Round(Model.main.temp)°C
             </div>
+
         </div>
 
-        <div class="weather-details">
-            <div class="detail-item">
-                <i class="fa-solid fa-temperature-half"></i>
-                <span>Hissedilen</span>
-                <strong>@Math.Round(Model.main.feels_like)°C</strong>
-            </div>
-
-            <div class="detail-item">
-                <i class="fa-solid fa-droplet"></i>
-                <span>Nem</span>
-                <strong>@Model.main.humidity%</strong>
-            </div>
-
-            <div class="detail-item">
-                <i class="fa-solid fa-wind"></i>
-                <span>Rüzgar</span>
-                <strong>@Math.Round(Model.wind.speed * 3.6) km/sa</strong>
-
-            </div>
-
-            <div class="detail-item">
-                <i class="fa-solid fa-gauge-high"></i>
-                <span>Basınç</span>
-                <strong>@Model.main.pressure hPa</strong>
-            </div>
+        <div class="weather-left-info">
+            <ul>
+                <li>
+                    <i class="fa-solid fa-temperature-half text-danger"></i>
+                    Hissedilen: <strong>@Math.Round(Model.main.feels_like)°C</strong>
+                </li>
+                <li>
+                    <i class="fa-solid fa-droplet text-primary"></i>
+                    Nem: <strong>@Model.main.humidity%</strong>
+                </li>
+                <li>
+                    <i class="fa-solid fa-wind text-success"></i>
+                    Rüzgar: <strong>@Math.Round(Model.wind.speed * 3.6) km/s</strong>
+                </li>
+                <li>
+                    <i class="fa-solid fa-gauge-high text-warning"></i>
+                    Basınç: <strong>@Model.main.pressure hPa</strong>
+                </li>
+            </ul>
         </div>
 
     </div>
 }
 
 
+
 <style>
-    .weather-card {
-        width: 100%;
-        min-height: 220px;
+
+    .weather-card-final {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        display: flex;
+        gap: 20px;
+        align-items: stretch;
+        min-height: 200px;
     }
 
-    .weather-header {
+    /* SOL TARAF */
+    .weather-left-info {
+        flex: 1;
         display: flex;
         align-items: center;
-        gap: 16px;
-        margin-bottom: 18px;
     }
 
-    .weather-icon {
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-    }
-
-        .weather-icon img {
-            width: 52px;
-            height: 52px;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,.25));
+        .weather-left-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
-    .weather-card.night .weather-icon {
-        background: rgba(255,255,255,0.15);
-    }
-
-        .weather-card.night .weather-icon img {
-            filter: drop-shadow(0 3px 6px rgba(255,255,255,.35));
+        .weather-left-info li {
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
         }
 
-    .weather-details {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+    /* SAĞ TARAF – ICON KUTUSU */
+    .weather-icon-area {
+        width: 220px;
+        border-radius: 16px;
+        padding: 14px 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
     }
 
-    .detail-item {
+        .weather-icon-area img {
+            width: 90px;
+            height: 90px;
+        }
+
+    /* Şehir */
+    .weather-city {
+        font-size: 13px;
+        font-weight: 600;
         display: flex;
         align-items: center;
-        gap: 10px;
-        background: rgba(255,255,255,0.75);
-        padding: 10px 12px;
-        border-radius: 12px;
-        font-size: 14px;
+        gap: 6px;
+        opacity: 0.95;
     }
 
-    .weather-card.night .detail-item {
-        background: rgba(255,255,255,0.12);
+    /* Derece */
+    .weather-main-temp {
+        font-size: 32px;
+        font-weight: 800;
+    }
+
+    /* DAY / NIGHT */
+    .weather-icon-area.day {
+        background: linear-gradient(135deg, #60a5fa, #38bdf8);
+    }
+
+    .weather-icon-area.night {
+        background: linear-gradient(135deg, #1e3a8a, #312e81);
+    }
+
+    /* MOBİL */
+    @@media (max-width: 768px) {
+        .weather-card-final {
+            flex-direction: column;
+        }
+
+        .weather-icon-area {
+            width: 100%;
+        }
+    }
+
+    /* KART HOVER */
+    .weather-card-final {
+        transition: all 0.3s ease;
+    }
+
+        .weather-card-final:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 32px rgba(0,0,0,0.12);
+        }
+
+    /* ICON ALANI HOVER */
+    .weather-icon-area {
+        transition: all 0.3s ease;
+    }
+
+    .weather-card-final:hover .weather-icon-area.day {
+        box-shadow: 0 0 0 6px rgba(56,189,248,0.25);
+    }
+
+    .weather-card-final:hover .weather-icon-area.night {
+        box-shadow: 0 0 0 6px rgba(49,46,129,0.35);
+    }
+
+    /* ICON HAFİF CANLANSIN */
+    .weather-icon-area img {
+        transition: transform 0.3s ease;
+    }
+
+    .weather-card-final:hover .weather-icon-area img {
+        transform: scale(1.08);
     }
 
 </style>
-

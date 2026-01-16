@@ -6,7 +6,7 @@
 }
 
 <section class="info-cards mt-4">
-    <div class="container">
+   
         <div class="row g-3">
 
             <div class="col-lg-3 col-md-6">
@@ -22,27 +22,11 @@
             </div>
 
             <div class="col-lg-3 col-md-6">
-               @*  @await Component.InvokeAsync("") *@
+           @*  @await Component.InvokeAsync("_UIGoldAPIComponent") *@
             </div>
 
         </div>
-    </div>
-</section>
 
-<section class="market-section mt-4">
-    <div class="container">
-        <div class="row g-4">
-
-            <div class="col-lg-6 col-md-12">
-                @await Component.InvokeAsync("_UIGoldAPIComponent")
-            </div>
-
-            <div class="col-lg-6 col-md-12">
-                @* ikinci büyük kart buraya *@
-            </div>
-
-        </div>
-    </div>
 </section>
 
 <br />
@@ -128,6 +112,21 @@
 
 <!-- About Us Section Begin -->
 
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>🍽️ Günün Yemeği</h4>
+            @await Component.InvokeAsync("_UIClaudeComponent")
+        </div>
+
+       @*  <div class="col-md-6">
+            <h4>🌤️ Hava Durumu</h4>
+            @await Component.InvokeAsync("_UIWeatherComponent")
+        </div> *@
+    </div>
+</div>
+
 @await Component.InvokeAsync("_UIAboutUsComponent")
 
 <!-- About Us Section End -->
@@ -136,17 +135,11 @@
 @await Component.InvokeAsync("_UIServicesComponent")
 <!-- Services Section End -->
 
-<!-- Home Room Section Begin -->
-@await Component.InvokeAsync("_UIHeroRoomComponent")
-<!-- Home Room Section End -->
 
 <!-- Testimonial Section Begin -->
 @await Component.InvokeAsync("_UITestimonialComponent")
 <!-- Testimonial Section End -->
 
-<!-- Blog Section Begin -->
-@await Component.InvokeAsync("_UIBlogComponent")
-<!-- Blog Section End -->
 
 
 

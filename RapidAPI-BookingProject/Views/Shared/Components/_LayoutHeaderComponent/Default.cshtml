@@ -35,7 +35,13 @@
                     <div class="logo">
                         <a href="./index.html">
                             <img src="~/sona-master/img/logo.png" alt="">
+
+                            <nav class="mainmenu">
+                                <ul>
+                            <li><a asp-controller="Dashboard" asp-action="Index">Genel Bakış</a></li>
+                            </ul>
                         </a>
+                       
                     </div>
                 </div>
                 <div class="col-lg-10">
@@ -43,8 +49,7 @@
                         <nav class="mainmenu">
                             <ul>
                                 <li class="active"><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                                <li><a asp-controller="About" asp-action="Index">Hakkımızda</a></li>
-                                <li><a asp-controller="Room" asp-action="Index">Odalar</a></li>
+                                <li><a asp-controller="About" asp-action="Index">Hakkımızda</a></li>                               
                                 <li><a asp-controller="Blog" asp-action="Index">Blog</a></li>
                                 <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
                             </ul>

@@ -11,6 +11,7 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
         private readonly string rapidapi_hostexchange = "exchangerate-api.p.rapidapi.com";
         private readonly string rapidapi_hostcrypto = "fast-price-exchange-rates.p.rapidapi.com";
         private readonly string rapidapi_gold = "harem-altin-live-gold-price-data.p.rapidapi.com";
+        private readonly string rapidapi_news = "real-time-news-data.p.rapidapi.com";
 
         public async Task<ResultCryptoDto> GetCryptoAsync()
         {
@@ -94,6 +95,29 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
                     .Where(x => allowedKeys.Contains(x.key))
                     .ToArray();
 
+                return value;
+            }
+        }
+
+        public async Task<ResultNewsOfTurkeyDto> GetNewsOfTurkeyAsync()
+        {
+           
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://real-time-news-data.p.rapidapi.com/search?query=turkey%20finance&limit=8&time_published=anytime&country=TR&lang=tr"),
+                Headers =
+            {
+                { "x-rapidapi-key", rapidapi_key },
+                { "x-rapidapi-host", rapidapi_news },
+            },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var value = JsonConvert.DeserializeObject<ResultNewsOfTurkeyDto>(body);
                 return value;
             }
         }
