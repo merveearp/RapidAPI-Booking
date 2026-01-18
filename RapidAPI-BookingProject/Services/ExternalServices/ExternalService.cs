@@ -12,6 +12,7 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
         private readonly string rapidapi_hostcrypto = "fast-price-exchange-rates.p.rapidapi.com";
         private readonly string rapidapi_gold = "harem-altin-live-gold-price-data.p.rapidapi.com";
         private readonly string rapidapi_news = "real-time-news-data.p.rapidapi.com";
+        private readonly string rapidapi_movie = "imdb-top-1002.p.rapidapi.com";
 
         public async Task<ResultCryptoDto> GetCryptoAsync()
         {
@@ -96,6 +97,29 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
                     .ToArray();
 
                 return value;
+            }
+        }
+
+        public async Task<List<ResultImdbMovieDto>> GetMovieAsync()
+        {
+          
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://imdb-top-1002.p.rapidapi.com/top_100_movies"),
+                Headers =
+                    {
+                        { "x-rapidapi-key", rapidapi_key },
+                        { "x-rapidapi-host", rapidapi_movie},
+                    },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultImdbMovieDto>>(body);
+                return values;
             }
         }
 

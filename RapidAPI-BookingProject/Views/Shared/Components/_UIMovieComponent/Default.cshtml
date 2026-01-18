@@ -1,0 +1,198 @@
+﻿@model List<ResultImdbMovieDto>
+@*
+    _UIMovieComponent
+*@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<div class="section-header text-center mb-4">
+    <h3 class="movie-section-title">
+        🎬 Popüler Filmler
+    </h3>
+    <p class="movie-section-desc">
+        Misafirlerimiz için IMDb puanı yüksek, mutlaka izlenmesi gereken filmleri sizin için listeledik.
+    </p>
+</div>
+
+<div class="movie-slider-wrapper">
+
+    <button class="slider-btn left" onclick="slideMovie(-1)">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <div id="movieSlider" class="movie-slider">
+        @foreach (var movie in Model)
+        {
+            <a href="@movie.imdb_link" target="_blank" class="movie-link">
+                <div class="movie-card">
+                    <img src="@movie.image" alt="@movie.title" />
+
+                    <div class="movie-overlay">
+                        IMDb’de Gör
+                    </div>
+
+                    <div class="movie-info">
+                        <div class="movie-title">@movie.title</div>
+
+                        <div class="movie-meta">
+                            <span>
+                                <i class="fa-solid fa-star"></i> @movie.rating
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-calendar"></i> @movie.year
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        }
+    </div>
+
+    <button class="slider-btn right" onclick="slideMovie(1)">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+</div>
+
+<script>
+    let currentIndex = 0;
+    const visibleCount = 5;
+    const cardWidth = 240;
+
+    function slideMovie(direction) {
+        const slider = document.getElementById("movieSlider");
+        const maxIndex = slider.children.length - visibleCount;
+
+        currentIndex += direction;
+
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+        slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+    }
+</script>
+
+<style>
+    .movie-section-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #111;
+    }
+
+    .movie-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .movie-section-desc {
+        font-size: 15px;
+        color: #666;
+    }
+
+    .movie-slider-wrapper {
+        position: relative;
+        overflow: hidden;
+        padding: 20px 0;
+    }
+
+    .movie-slider {
+        display: flex;
+        gap: 20px;
+        transition: transform 0.4s ease;
+    }
+
+    .movie-card {
+        min-width: 220px;
+        background: #111;
+        border-radius: 12px;
+        overflow: hidden;
+        color: #fff;
+        box-shadow: 0 10px 25px rgba(0,0,0,.4);
+    }
+
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+    .movie-info {
+        padding: 12px;
+    }
+
+    .movie-title {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .movie-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #ccc;
+    }
+
+        .movie-meta i {
+            margin-right: 4px;
+            color: #f5c518;
+        }
+
+    .movie-card {
+        min-width: 220px;
+        background: #111;
+        border-radius: 12px;
+        overflow: hidden;
+        color: #fff;
+        box-shadow: 0 10px 25px rgba(0,0,0,.4);
+        transition: all 0.35s ease;
+        cursor: pointer;
+    }
+
+        /* kart hover */
+        .movie-card:hover {
+            transform: translateY(-10px) scale(1.04);
+            box-shadow: 0 20px 45px rgba(0,0,0,.7);
+        }
+
+        /* görsel hover zoom */
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .movie-card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* info alanı hover */
+        .movie-card:hover .movie-title {
+            color: #f5c518;
+        }
+
+    /* arrows */
+    .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0,0,0,.7);
+        border: none;
+        color: #fff;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 5;
+    }
+
+        .slider-btn.left {
+            left: 0;
+        }
+
+        .slider-btn.right {
+            right: 0;
+        }
+</style>

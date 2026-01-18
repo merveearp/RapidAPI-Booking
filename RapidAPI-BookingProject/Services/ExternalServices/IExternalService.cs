@@ -9,6 +9,7 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
         Task<ResultCryptoDto> GetCryptoAsync();
         Task<ResultGoldPriceDto> GetGoldPriceAsync();
         Task<ResultNewsOfTurkeyDto> GetNewsOfTurkeyAsync();
+        Task<List<ResultImdbMovieDto>> GetMovieAsync();
 
     }
 }

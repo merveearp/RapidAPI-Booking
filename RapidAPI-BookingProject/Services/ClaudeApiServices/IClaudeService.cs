@@ -5,5 +5,6 @@ namespace RapidAPI_BookingProject.Services.ClaudeApiServices
     public interface IClaudeService
     {
         Task<DailyDishDto> GetDailyDishAsync();
+        Task<List<ResultPlaceDto>> GetPlacesAsync(string cityName);
     }
 }

@@ -1,22 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
-using RapidAPI_BookingProject.Dtos.BookingDtos;
 using RapidAPI_BookingProject.Models;
 using RapidAPI_BookingProject.Services.BookingServices;
-using RapidAPI_BookingProject.Services.ExternalServices;
+using RapidAPI_BookingProject.Services.ClaudeApiServices;
 
-public class HomeController : Controller
+
+public class HomeController(IBookingService _bookingService,IClaudeService _claudeService) : Controller
 {
-    private readonly IBookingService _bookingService;
-    private readonly IExternalService _externalService;
-
-    public HomeController(IBookingService bookingService, IExternalService externalService)
-    {
-        _bookingService = bookingService;
-        _externalService = externalService;
-    }
-
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {      
         return View();
     }
@@ -43,7 +33,6 @@ public class HomeController : Controller
         
         return View(model);
     }
-
 
 }
 

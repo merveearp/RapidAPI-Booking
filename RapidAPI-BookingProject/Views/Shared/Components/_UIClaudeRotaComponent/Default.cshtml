@@ -1,0 +1,129 @@
+﻿@model List<ResultPlaceDto>
+
+<div class="route-container">
+    @if (Model != null && Model.Any())
+    {
+        <div class="route-header mb-3">
+            <h5 class="text-white">
+                <i class="fas fa-map-marked-alt"></i>
+                @ViewBag.CityName Gezilecek Yerler
+            </h5>
+        </div>
+
+        <div class="places-list">
+            @foreach (var place in Model)
+            {
+                <div class="place-item">
+                    <div class="place-icon">
+                        <img src="@place.ImageUrl"
+                             alt="@place.Place"
+                             onerror="this.src='https://source.unsplash.com/800x600/?landmark'">
+                    </div>
+                    <div class="place-info">
+                        <h6>@place.Place</h6>
+                        <p>@place.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center text-white py-5">
+            <div class="spinner-border mb-3" role="status">
+                <span class="visually-hidden">Yükleniyor...</span>
+            </div>
+            <p>@ViewBag.CityName için gezi rotası hazırlanıyor...</p>
+        </div>
+    }
+</div>
+
+<style>
+    .route-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        min-height: 400px;
+        max-height: 550px;
+        overflow-y: auto;
+    }
+
+    .route-header h5 {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .places-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .place-item {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .place-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+    .place-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #f0f0f0;
+    }
+
+        .place-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .place-info {
+        flex: 1;
+    }
+
+        .place-info h6 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .place-info p {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+    .route-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .route-container::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+    }
+
+    .route-container::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.3);
+        border-radius: 10px;
+    }
+
+        .route-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
+        }
+</style>
