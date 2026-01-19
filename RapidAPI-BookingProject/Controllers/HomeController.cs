@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
+
 using RapidAPI_BookingProject.Models;
 using RapidAPI_BookingProject.Services.BookingServices;
-using RapidAPI_BookingProject.Services.ClaudeApiServices;
 
 
-public class HomeController(IBookingService _bookingService,IClaudeService _claudeService) : Controller
+public class HomeController(IBookingService _bookingService) : Controller
 {
-    public IActionResult Index()
-    {      
+    public async Task<IActionResult> Index()
+    {
+     
         return View();
     }
-
 
     public async Task<IActionResult> HotelDetail(string hotelId, string checkIn, string checkOut)
     {

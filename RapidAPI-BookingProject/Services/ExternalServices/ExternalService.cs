@@ -1,6 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RapidAPI_BookingProject.Dtos.ExternalDtos;
+using System.Collections.Generic;
+using System.Net;
+using System.Text.Json;
 
 namespace RapidAPI_BookingProject.Services.ExternalServices
 {
@@ -13,6 +17,35 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
         private readonly string rapidapi_gold = "harem-altin-live-gold-price-data.p.rapidapi.com";
         private readonly string rapidapi_news = "real-time-news-data.p.rapidapi.com";
         private readonly string rapidapi_movie = "imdb-top-1002.p.rapidapi.com";
+        private readonly string rapidapi_article = "google-news13.p.rapidapi.com";
+
+        public async Task<List<ResultArticleDto.Item>> GetArticlesAsync()
+        {
+            var client = new HttpClient();
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://google-news13.p.rapidapi.com/business?lr=tr-TR"),
+                Headers =
+                {
+                    { "x-rapidapi-key", rapidapi_key },
+                    { "x-rapidapi-host", rapidapi_article },
+                },
+            };
+
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+
+                var body = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<ResultArticleDto>(body);
+
+                return result?.items ?? new List<ResultArticleDto.Item>();
+            }
+        }
+
 
         public async Task<ResultCryptoDto> GetCryptoAsync()
         {
@@ -24,7 +57,7 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
                 RequestUri = new Uri("https://fast-price-exchange-rates.p.rapidapi.com/api/v1/convert-rates/crypto/from?detailed=false&currency=USD"),
                 Headers =
                 {
-                    { "x-rapidapi-key", rapidapi_key },
+                    { "x-rapidapi-key", "c578002d39mshcbd1ef108c18afep1f3e64jsn64cd0b132a82" },
                     { "x-rapidapi-host", rapidapi_hostcrypto },
                 },
             };
@@ -47,7 +80,7 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
                 RequestUri = new Uri("https://exchangerate-api.p.rapidapi.com/rapid/latest/try"),
                 Headers =
                 {
-                    { "x-rapidapi-key", rapidapi_key },
+                    { "x-rapidapi-key", "c578002d39mshcbd1ef108c18afep1f3e64jsn64cd0b132a82" },
                     { "x-rapidapi-host", rapidapi_hostexchange},
                 },
             };

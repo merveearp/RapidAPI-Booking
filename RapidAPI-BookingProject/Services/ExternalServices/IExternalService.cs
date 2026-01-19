@@ -1,5 +1,6 @@
 ﻿using RapidAPI_BookingProject.Dtos.ExternalDtos;
 
+
 namespace RapidAPI_BookingProject.Services.ExternalServices
 {
     public interface IExternalService
@@ -10,6 +11,8 @@ namespace RapidAPI_BookingProject.Services.ExternalServices
         Task<ResultGoldPriceDto> GetGoldPriceAsync();
         Task<ResultNewsOfTurkeyDto> GetNewsOfTurkeyAsync();
         Task<List<ResultImdbMovieDto>> GetMovieAsync();
+        Task<List<ResultArticleDto.Item>> GetArticlesAsync();
+       
 
     }
 }

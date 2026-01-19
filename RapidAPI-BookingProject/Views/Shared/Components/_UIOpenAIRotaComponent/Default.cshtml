@@ -1,0 +1,147 @@
+﻿@model List<ResultPlaceDto>
+
+<div class="route-container">
+    <h5 class="route-title">
+        <i class="fa-solid fa-map-location-dot"></i>
+        @ViewBag.CityName Gezilecek Yerler
+    </h5>
+
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="places-list">
+            @{
+                var index = 1;
+            }
+            @foreach (var place in Model)
+            {
+                var mapQuery = Uri.EscapeDataString($"{place.Place} {ViewBag.CityName}");
+
+                <a class="place-item"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   href="https://www.google.com/maps/search/?api=1&query=@mapQuery">
+
+                    <div class="place-left">
+                        <span class="place-index">@index</span>
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div class="place-info">
+                        <h6>@place.Place</h6>
+                        <p>@place.Description</p>
+
+                        <span class="map-link">
+                            Haritada Gör →
+                        </span>
+                    </div>
+                </a>
+
+                index++;
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-white">Gezilecek yer bilgisi bulunamadı.</p>
+    }
+</div>
+
+
+
+<style>
+    .route-container {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 22px;
+        padding: 26px;
+        box-shadow: 0 15px 35px rgba(0,0,0,.25);
+        max-height: 750px;
+        overflow-y: auto;
+    }
+
+    .route-container {
+        overflow: hidden; /* scroll YOK */
+    }
+
+
+    .route-title {
+        color: #fff;
+        font-weight: 800;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .places-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .place-item {
+        background: #fff;
+        border-radius: 14px;
+        padding: 16px;
+        display: flex;
+        gap: 16px;
+        text-decoration: none;
+        transition: all .25s ease;
+        position: relative;
+    }
+
+        .place-item:hover {
+            transform: translateX(6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.15);
+        }
+
+    .place-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        min-width: 40px;
+        color: #764ba2;
+    }
+
+    .place-index {
+        font-size: 13px;
+        font-weight: 700;
+        background: rgba(118,75,162,.1);
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .place-left i {
+        font-size: 18px;
+    }
+
+    .place-info h6 {
+        font-size: 15px;
+        font-weight: 800;
+        color: #2d3748;
+        margin-bottom: 6px;
+    }
+
+    .place-info p {
+        font-size: 13px;
+        color: #4a5568;
+        line-height: 1.5;
+        margin-bottom: 8px;
+    }
+
+    .map-link {
+        font-size: 12px;
+        font-weight: 600;
+        color: #667eea;
+    }
+
+    .place-item:hover .map-link {
+        text-decoration: underline;
+    }
+
+    
+
+</style>

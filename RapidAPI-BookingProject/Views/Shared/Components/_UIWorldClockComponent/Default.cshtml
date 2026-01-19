@@ -1,0 +1,148 @@
+﻿<div class="world-clock-wrapper">
+    <h5><i class="fa-solid fa-clock"></i> Dünya Saatleri</h5>
+
+    <div class="clock-grid">
+
+        <div class="clock-card" data-timezone="Europe/Istanbul">
+            <div class="clock">
+                <div class="hand hour"></div>
+                <div class="hand minute"></div>
+                <div class="hand second"></div>
+                <div class="center-dot"></div>
+            </div>
+            <span>🇹🇷 İstanbul</span>
+        </div>
+
+        <div class="clock-card" data-timezone="Europe/London">
+            <div class="clock">
+                <div class="hand hour"></div>
+                <div class="hand minute"></div>
+                <div class="hand second"></div>
+                <div class="center-dot"></div>
+            </div>
+            <span>🇬🇧 Londra</span>
+        </div>
+
+        <div class="clock-card" data-timezone="America/New_York">
+            <div class="clock">
+                <div class="hand hour"></div>
+                <div class="hand minute"></div>
+                <div class="hand second"></div>
+                <div class="center-dot"></div>
+            </div>
+            <span>🇺🇸 New York</span>
+        </div>
+
+        <div class="clock-card" data-timezone="Asia/Tokyo">
+            <div class="clock">
+                <div class="hand hour"></div>
+                <div class="hand minute"></div>
+                <div class="hand second"></div>
+                <div class="center-dot"></div>
+            </div>
+            <span>🇯🇵 Tokyo</span>
+        </div>
+
+        <div class="clock-card" data-timezone="Asia/Dubai">
+            <div class="clock">
+                <div class="hand hour"></div>
+                <div class="hand minute"></div>
+                <div class="hand second"></div>
+                <div class="center-dot"></div>
+            </div>
+            <span>🇦🇪 Dubai</span>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function updateAnalogClocks() {
+        document.querySelectorAll(".clock-card").forEach(card => {
+            const tz = card.dataset.timezone;
+            const now = new Date(
+                new Date().toLocaleString("en-US", { timeZone: tz })
+            );
+
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secondDeg = seconds * 6;
+            const minuteDeg = minutes * 6 + seconds * 0.1;
+            const hourDeg = hours * 30 + minutes * 0.5;
+
+            card.querySelector(".second").style.transform = `rotate(${secondDeg}deg)`;
+            card.querySelector(".minute").style.transform = `rotate(${minuteDeg}deg)`;
+            card.querySelector(".hour").style.transform = `rotate(${hourDeg}deg)`;
+        });
+    }
+
+    setInterval(updateAnalogClocks, 1000);
+    updateAnalogClocks();
+</script>
+
+<style>
+
+    .world-clock-wrapper {
+        padding: 20px;
+    }
+
+    .clock-grid {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .clock-card {
+        text-align: center;
+        width: 140px;
+    }
+
+    .clock {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border: 6px solid #222;
+        border-radius: 50%;
+        margin: auto;
+    }
+
+    .hand {
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        background: #000;
+        top: 50%;
+        transform-origin: 100%;
+        transform: rotate(90deg);
+    }
+
+    .hour {
+        height: 4px;
+        width: 35%;
+    }
+
+    .minute {
+        height: 3px;
+    }
+
+    .second {
+        background: red;
+    }
+
+    .center-dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #000;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+
+</style>
+   

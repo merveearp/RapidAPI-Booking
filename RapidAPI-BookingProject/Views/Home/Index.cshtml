@@ -8,7 +8,7 @@
 <section class="info-cards mt-4">
    
         <div class="row g-3">
-
+ 
             <div class="col-lg-3 col-md-6">
                 @await Component.InvokeAsync("_UIWeatherComponent")
             </div>
@@ -17,12 +17,13 @@
                 @await Component.InvokeAsync("_UIExchangeComponent")
             </div>
 
-            <div class="col-lg-3 col-md-6">
+             <div class="col-lg-3 col-md-6">
                 @await Component.InvokeAsync("_UICryptoComponent")
-            </div>
+            </div>  
 
-            <div class="col-lg-3 col-md-6">
-           @*  @await Component.InvokeAsync("_UIGoldAPIComponent") *@
+           <div class="col-lg-3 col-md-6">
+            @await Component.InvokeAsync("_UIFuelComponent")
+
             </div>
 
         </div>
@@ -117,13 +118,16 @@
     <div class="row">
         <div class="col-md-6">
             <h4>🍽️ Günün Yemeği</h4>
-            @await Component.InvokeAsync("_UIClaudeComponent")
+@*             @await Component.InvokeAsync("_UIClaudeComponent") *@
+            @await Component.InvokeAsync("_UIMealComponent")
         </div>
 
         <div class="col-md-6">
-            <h4>🗺️ Gezi Rotası Önerisi </h4>
-           @*  @await Component.InvokeAsync("_UIRotaComponent") *@
+            <h4>🗺️ Gezi Rotası Önerisi</h4>
+            @await Component.InvokeAsync("_UIOpenAIRotaComponent")
+
         </div>
+
     </div>
 </div>
 
@@ -166,4 +170,96 @@
             font-size: 18px;
         }
 
+</style>
+
+
+
+<style>
+    .route-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        min-height: 400px;
+        max-height: 550px;
+        overflow-y: auto;
+    }
+
+    .route-header h5 {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .places-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .place-item {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .place-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+    .place-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #f0f0f0;
+    }
+
+        .place-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .place-info {
+        flex: 1;
+    }
+
+        .place-info h6 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .place-info p {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+    .route-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .route-container::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+    }
+
+    .route-container::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.3);
+        border-radius: 10px;
+    }
+
+        .route-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
+        }
 </style>
