@@ -134,7 +134,6 @@ Projeden alıntı görseller :
 ![uı-2](https://github.com/user-attachments/assets/ffcd95ac-1ba5-474a-beae-760b8fe538fd)
 ![uı-3](https://github.com/user-attachments/assets/3401023e-1696-402e-a360-4446a673eee7)
 ![uı-4](https://github.com/user-attachments/assets/95758e7d-8dc3-4dc8-965a-e78bdfc91647)
-![uı-5](https://github.com/user-attachments/assets/1b9728aa-f5d1-414d-8920-dcd372dc3c7a)
 ![uı-1 1](https://github.com/user-attachments/assets/d131a8f3-a455-42c4-9454-ef2028740d22)
 ![uı-1 3](https://github.com/user-attachments/assets/ac24d211-eff0-489b-a83b-16d90bc4c6e9)
 ![uı-2 2](https://github.com/user-attachments/assets/f7593671-69d9-4ed5-b36e-152cefc30581)
