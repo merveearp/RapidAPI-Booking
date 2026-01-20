@@ -1,4 +1,4 @@
-﻿using RapidAPI_BookingProject.Dtos.ClaudeDtos;
+﻿using RapidAPI_BookingProject.Dtos.OpenAIRotaDtos;
 
 namespace RapidAPI_BookingProject.Services.OpenAIServices
 {

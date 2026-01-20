@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
-using RapidAPI_BookingProject.Dtos.ClaudeDtos;
+using RapidAPI_BookingProject.Dtos.OpenAIRotaDtos;
 
 namespace RapidAPI_BookingProject.Services.OpenAIServices
 {
@@ -42,21 +42,21 @@ namespace RapidAPI_BookingProject.Services.OpenAIServices
                         {
                             role = "user",
                             content = $@"
-{cityName} şehri için gezilmesi gereken EN POPÜLER 6 TARİHİ ve TURİSTİK YERİ listele.
+                    {cityName} şehri için gezilmesi gereken EN POPÜLER 6 TARİHİ ve TURİSTİK YERİ listele.
 
-Kurallar:
-- Sadece gerçek ve bilinen yer isimleri yaz.
-- 'Şehir merkezi' gibi belirsiz ifadeler kullanma.
-- Tam olarak 6 farklı yer yaz.
-- Açıklamalar kısa olsun (1-2 cümle).
+                    Kurallar:
+                    - Sadece gerçek ve bilinen yer isimleri yaz.
+                    - 'Şehir merkezi' gibi belirsiz ifadeler kullanma.
+                    - Tam olarak 6 farklı yer yaz.
+                    - Açıklamalar kısa olsun (1-2 cümle).
 
-Cevabı SADECE aşağıdaki JSON formatında ver:
-[
-  {{
-    ""Place"": ""Yer adı"",
-    ""Description"": ""Kısa açıklama""
-  }}
-]"
+                    Cevabı SADECE aşağıdaki JSON formatında ver:
+                    [
+                      {{
+                        ""Place"": ""Yer adı"",
+                        ""Description"": ""Kısa açıklama""
+                      }}
+                    ]"
                         }
                     }
                 };
@@ -67,10 +67,7 @@ Cevabı SADECE aşağıdaki JSON formatında ver:
                     "application/json"
                 );
 
-                var response = await client.PostAsync(
-    "https://api.openai.com/v1/chat/completions",
-    content
-);
+                var response = await client.PostAsync( "https://api.openai.com/v1/chat/completions",content);
 
                 if (!response.IsSuccessStatusCode)
                     return GetDefaultPlaces(cityName);

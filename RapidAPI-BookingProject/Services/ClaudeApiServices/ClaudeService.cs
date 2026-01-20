@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RapidAPI_BookingProject.Dtos.ClaudeDtos;
 using System.Text;
 
 namespace RapidAPI_BookingProject.Services.ClaudeApiServices

@@ -1,6 +1,6 @@
 ﻿
 
-namespace RapidAPI_BookingProject.Dtos.ClaudeDtos
+namespace RapidAPI_BookingProject.Dtos.OpenAIRotaDtos
 {
     public class ResultPlaceDto
     {      
