@@ -47,7 +47,7 @@ namespace RapidAPI_BookingProject.Services.OpenAIServices
 Kurallar:
 - Sadece gerçek ve bilinen yer isimleri yaz.
 - 'Şehir merkezi' gibi belirsiz ifadeler kullanma.
-- Tam olarak 4 farklı yer yaz.
+- Tam olarak 6 farklı yer yaz.
 - Açıklamalar kısa olsun (1-2 cümle).
 
 Cevabı SADECE aşağıdaki JSON formatında ver:

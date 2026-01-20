@@ -98,21 +98,30 @@
 
     @if (Model.Score?.score_breakdown != null)
     {
-        <h3 class="section-title">Misafir Puanları</h3>
+        <div class="guest-score-wrapper">
+            <h3 class="section-title text-center">Misafir Puanları</h3>
 
-        <ul class="hotel-score-list">
-            @foreach (var block in Model.Score.score_breakdown)
-            {
-                @foreach (var q in block.question)
+            <div class="guest-score-card">
+                @foreach (var block in Model.Score.score_breakdown)
                 {
-                    <li>
-                        <span>@q.localized_question</span>
-                        <strong>@q.score</strong>
-                    </li>
+                    @foreach (var q in block.question)
+                    {
+                        <div class="guest-score-row">
+                            <span class="score-label">@q.localized_question</span>
+
+                            <div class="score-bar-area">
+                                <div class="score-bar">
+                                    <span style="width:@(Convert.ToDouble(q.score) * 10)%"></span>
+                                </div>
+                                <strong class="score-number">@q.score</strong>
+                            </div>
+                        </div>
+                    }
                 }
-            }
-        </ul>
+            </div>
+        </div>
     }
+
 
 
 </div>
@@ -137,6 +146,78 @@
 
 
 <style>
+
+    /* ===== GUEST SCORES ===== */
+    .guest-score-wrapper {
+        margin-top: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .guest-score-card {
+        width: 100%;
+        max-width: 720px;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 28px 32px;
+        box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    }
+
+    .guest-score-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+        .guest-score-row:last-child {
+            border-bottom: none;
+        }
+
+    .score-label {
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+        width: 40%;
+    }
+
+    .score-bar-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 60%;
+    }
+
+    .score-bar {
+        flex: 1;
+        height: 8px;
+        background: #e6e6e6;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+        .score-bar span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #2a9d8f, #52b69a);
+            border-radius: 6px;
+        }
+
+    .score-number {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2a9d8f;
+        min-width: 32px;
+        text-align: right;
+    }
+
+    /* Ortalı başlık */
+    .text-center {
+        text-align: center;
+    }
+
     /* ===== SCORE BOX ===== */
     .hotel-score-box {
         display: flex;

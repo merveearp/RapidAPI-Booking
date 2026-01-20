@@ -5,26 +5,22 @@
 
 }
 
-<section class="info-cards mt-4">
-   
+<section class="info-cards mt-4 compact-cards">
+
         <div class="row g-3">
  
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 @await Component.InvokeAsync("_UIWeatherComponent")
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 @await Component.InvokeAsync("_UIExchangeComponent")
             </div>
 
-             <div class="col-lg-3 col-md-6">
+             <div class="col-lg-4 col-md-6">
                 @await Component.InvokeAsync("_UICryptoComponent")
             </div>  
 
-           <div class="col-lg-3 col-md-6">
-            @await Component.InvokeAsync("_UIFuelComponent")
-
-            </div>
 
         </div>
 
@@ -32,6 +28,26 @@
 
 <br />
 <br />
+@if (ViewBag.LastSearch != null)
+{
+    <div class="last-search-info">
+        <strong>Son Aramanız:</strong>
+        <span>
+            @ViewBag.LastSearch.City
+            @if (ViewBag.LastSearch.CheckIn != null && ViewBag.LastSearch.CheckOut != null)
+            {
+                <text>
+                    · @ViewBag.LastSearch.CheckIn.ToString("dd MMM") -
+                    @ViewBag.LastSearch.CheckOut.ToString("dd MMM")
+                </text>
+            }
+            @if (ViewBag.LastSearch.Adults != null)
+            {
+                <text> · @ViewBag.LastSearch.Adults Yetişkin</text>
+            }
+        </span>
+    </div>
+}
 
 <!-- Hero Section Begin -->
 <section class="hero-section">
@@ -117,8 +133,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6">
-            <h4>🍽️ Günün Yemeği</h4>
-@*             @await Component.InvokeAsync("_UIClaudeComponent") *@
+            <h4>🍽️ Günün Yemeği</h4>           
             @await Component.InvokeAsync("_UIMealComponent")
         </div>
 
@@ -147,6 +162,20 @@
 
 
 <style>
+    .last-search-info {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        color: #333;
+    }
+
+        .last-search-info strong {
+            margin-right: 6px;
+            font-weight: 600;
+        }
+
     .info-card {
         background: #fff;
         border-radius: 18px;
@@ -175,13 +204,54 @@
 
 
 <style>
+    .compact-cards .col-lg-4 {
+        display: flex;
+    }
+
+    .compact-cards .info-card {
+        width: 100%;
+    }
+
+    /* Kart genel yüksekliği */
+    .compact-cards .info-card {
+        padding: 18px 16px;
+        min-height: auto;
+    }
+
+        /* Kart başlığı */
+        .compact-cards .info-card h5,
+        .compact-cards .exchange-header h5 {
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+    /* Header ikon + başlık aralığı */
+    .compact-cards .exchange-header,
+    .compact-cards .card-header {
+        margin-bottom: 10px;
+    }
+
+    /* Liste aralıkları (döviz, crypto vb.) */
+    .compact-cards ul li {
+        padding: 6px 0;
+        font-size: 0.95rem;
+    }
+
+    /* Alt açıklamalar */
+    .compact-cards .card-footer,
+    .compact-cards .last-update,
+    .compact-cards small {
+        margin-top: 6px;
+        font-size: 0.8rem;
+    }
+
     .route-container {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 20px;
         padding: 25px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         min-height: 400px;
-        max-height: 550px;
+        max-height: 750px;
         overflow-y: auto;
     }
 

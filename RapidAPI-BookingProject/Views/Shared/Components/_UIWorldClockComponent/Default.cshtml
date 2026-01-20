@@ -1,8 +1,8 @@
-﻿<div class="world-clock-wrapper">
-    <h5><i class="fa-solid fa-clock"></i> Dünya Saatleri</h5>
+﻿
 
+<div class="world-clock-wrapper">
+    <h1><span class="clock-icon">🌍</span>Dünya Saatleri</h1>
     <div class="clock-grid">
-
         <div class="clock-card" data-timezone="Europe/Istanbul">
             <div class="clock">
                 <div class="hand hour"></div>
@@ -10,9 +10,9 @@
                 <div class="hand second"></div>
                 <div class="center-dot"></div>
             </div>
-            <span>🇹🇷 İstanbul</span>
+            <div class="city-name">🇹🇷 İstanbul</div>
+            <div class="digital-time">--:--:--</div>
         </div>
-
         <div class="clock-card" data-timezone="Europe/London">
             <div class="clock">
                 <div class="hand hour"></div>
@@ -20,9 +20,9 @@
                 <div class="hand second"></div>
                 <div class="center-dot"></div>
             </div>
-            <span>🇬🇧 Londra</span>
+            <div class="city-name">🇬🇧 Londra</div>
+            <div class="digital-time">--:--:--</div>
         </div>
-
         <div class="clock-card" data-timezone="America/New_York">
             <div class="clock">
                 <div class="hand hour"></div>
@@ -30,9 +30,9 @@
                 <div class="hand second"></div>
                 <div class="center-dot"></div>
             </div>
-            <span>🇺🇸 New York</span>
+            <div class="city-name">🇺🇸 New York</div>
+            <div class="digital-time">--:--:--</div>
         </div>
-
         <div class="clock-card" data-timezone="Asia/Tokyo">
             <div class="clock">
                 <div class="hand hour"></div>
@@ -40,33 +40,32 @@
                 <div class="hand second"></div>
                 <div class="center-dot"></div>
             </div>
-            <span>🇯🇵 Tokyo</span>
+            <div class="city-name">🇯🇵 Tokyo</div>
+            <div class="digital-time">--:--:--</div>
         </div>
-
-        <div class="clock-card" data-timezone="Asia/Dubai">
-            <div class="clock">
-                <div class="hand hour"></div>
-                <div class="hand minute"></div>
-                <div class="hand second"></div>
-                <div class="center-dot"></div>
-            </div>
-            <span>🇦🇪 Dubai</span>
-        </div>
-
     </div>
 </div>
 
 <script>
-    function updateAnalogClocks() {
+    function updateWorldClocks() {
         document.querySelectorAll(".clock-card").forEach(card => {
             const tz = card.dataset.timezone;
-            const now = new Date(
-                new Date().toLocaleString("en-US", { timeZone: tz })
-            );
+            const now = new Date();
 
-            const seconds = now.getSeconds();
-            const minutes = now.getMinutes();
-            const hours = now.getHours();
+            const timeString = now.toLocaleString("tr-TR", {
+                timeZone: tz,
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            card.querySelector(".digital-time").textContent = timeString;
+
+            const localTime = new Date(now.toLocaleString("en-US", { timeZone: tz }));
+            const seconds = localTime.getSeconds();
+            const minutes = localTime.getMinutes();
+            const hours = localTime.getHours() % 12;
 
             const secondDeg = seconds * 6;
             const minuteDeg = minutes * 6 + seconds * 0.1;
@@ -78,71 +77,159 @@
         });
     }
 
-    setInterval(updateAnalogClocks, 1000);
-    updateAnalogClocks();
+    setInterval(updateWorldClocks, 1000);
+    updateWorldClocks();
 </script>
 
 <style>
-
     .world-clock-wrapper {
-        padding: 20px;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-radius: 20px;
+        margin: 20px 0;
+    }
+
+        .world-clock-wrapper h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+    .clock-icon {
+        margin-right: 15px;
     }
 
     .clock-grid {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        padding: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
     }
 
     .clock-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px 20px;
         text-align: center;
-        width: 140px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+        .clock-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
 
     .clock {
         position: relative;
-        width: 120px;
-        height: 120px;
-        border: 6px solid #222;
+        width: 150px;
+        height: 150px;
+        border: 8px solid #333;
         border-radius: 50%;
-        margin: auto;
+        margin: 0 auto 20px;
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+
+        .clock {
+            box-sizing: border-box;
+        }
     }
+
+        .clock::before {
+            content: '';
+            position: absolute;
+            inset: 6px; /* 8px border'dan biraz içeri */
+            background: repeating-conic-gradient( from 0deg, transparent 0deg 6deg, #333 6deg 7deg, transparent 7deg 30deg );
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
 
     .hand {
         position: absolute;
-        width: 50%;
-        height: 2px;
-        background: #000;
         top: 50%;
-        transform-origin: 100%;
-        transform: rotate(90deg);
+        left: 50%;
+        transform-origin: 50% 100%;
     }
 
     .hour {
-        height: 4px;
-        width: 35%;
+        width: 6px;
+        height: 45px;
+        background: #333;
+        margin-left: -3px;
+        margin-top: -45px;
     }
 
     .minute {
-        height: 3px;
+        width: 4px;
+        height: 60px;
+        background: #555;
+        margin-left: -2px;
+        margin-top: -60px;
     }
 
     .second {
-        background: red;
+        width: 2px;
+        height: 65px;
+        background: #e74c3c;
+        margin-left: -1px;
+        margin-top: -65px;
+        z-index: 11;
     }
 
     .center-dot {
         position: absolute;
-        width: 8px;
-        height: 8px;
-        background: #000;
+        width: 12px;
+        height: 12px;
+        background: #333;
         border-radius: 50%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        z-index: 12;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
+    .city-name {
+        font-size: 1.3em;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+    }
 
+    .digital-time {
+        font-size: 1.1em;
+        color: #666;
+        font-weight: 500;
+    }
 
+    @@media (max-width: 768px) {
+        .world-clock-wrapper h1 {
+            font-size: 2em;
+        }
+
+        .clock {
+            width: 120px;
+            height: 120px;
+        }
+
+        .hour {
+            height: 35px;
+            top: calc(50% - 35px);
+        }
+
+        .minute {
+            height: 48px;
+            top: calc(50% - 48px);
+        }
+
+        .second {
+            height: 52px;
+            top: calc(50% - 52px);
+        }
+    }
 </style>
-   

@@ -23,6 +23,12 @@
         </div>
     </div>
 </div>
+
+
+<div class="container">
+    @await Component.InvokeAsync("_UIWorldClockComponent")
+</div>
+
 <!-- Breadcrumb Section End -->
 <section class="market-section mt-4 mb-5">
     <div class="container">
@@ -40,9 +46,6 @@
     </div>
 </section>
 
-<div class="col-lg-6 col-md-12">
-    @await Component.InvokeAsync("_UIWorldClockComponent")
-</div>
 
 <div class="container"> 
     @await Component.InvokeAsync("_UIMovieComponent")

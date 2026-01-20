@@ -6,11 +6,26 @@ using RapidAPI_BookingProject.Services.BookingServices;
 
 public class HomeController(IBookingService _bookingService) : Controller
 {
-    public async Task<IActionResult> Index()
+    public IActionResult Index(
+     string cityName,
+     DateTime? checkIn,
+     DateTime? checkOut,
+     int? adults)
     {
-     
+        if (!string.IsNullOrEmpty(cityName))
+        {
+            ViewBag.LastSearch = new
+            {
+                City = cityName,
+                CheckIn = checkIn,
+                CheckOut = checkOut,
+                Adults = adults
+            };
+        }
+
         return View();
     }
+
 
     public async Task<IActionResult> HotelDetail(string hotelId, string checkIn, string checkOut)
     {
